@@ -26,6 +26,8 @@ const bookSchema = new Schema({
     type: String,
     required: true,
   },
+  //need this otherwise will create dups when adding to set
+  _id: false
 });
 
 module.exports = bookSchema;
