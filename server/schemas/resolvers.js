@@ -20,14 +20,16 @@ const resolvers = {
       return User.create({ username: email, email, password });
     },
     /**add a book to the user saved books array */
-    userSaveBook: async (_, { input }) => {
-      let { email, bookId, title, description, image, link, authors } = input;
+    userSaveBook: async (_, {email, input }) => {
+      let {bookId, title, description, image, link, authors } = input;
+      console.log(input)
 
       return User.findOneAndUpdate(
         {
           email: email,
         },
         {
+          //this adds duplicate unless _id:false is added to the model definition
           $addToSet: {
             savedBooks: { bookId, title, description, image, link, authors },
           },
