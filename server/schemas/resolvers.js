@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
@@ -15,9 +16,12 @@ const resolvers = {
      *  will henceforth have the same value. For all other purposes the email is 
      *  used instead of the username (i.e. in the ui, input definition, etc)
      */
-    userCreate: async (_, { input }) => {
+    userCreate: async (_, {input}) => {
+      console.log(input)
       let { email, password } = input;
-      return User.create({ username: email, email, password });
+      let user = await User.create({ username: email, email, password });
+      let token = signToken(user);
+      return {user, token};
     },
     /**add a book to the user saved books array */
     userSaveBook: async (_, {email, input }) => {
@@ -41,14 +45,14 @@ const resolvers = {
       );
     },
     /**delete a saved book from the user saved books array */
-    userDeleteBook: async (_, { input }) => {
-      let { email, bookId } = input;
+    userDeleteBook: async (_, {email, bookId }) => {
+
       return User.findOneAndUpdate(
         {
           email: email,
         },
         {
-          $pull: { savedBooks: bookId },
+          $pull: { savedBooks: {bookId:bookId} },
         },
         {
           new: true,
