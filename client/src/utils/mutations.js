@@ -38,9 +38,14 @@ export const REMOVE_BOOK = gql`
 `;
 
 export const LOGIN = gql`
-  mutation UserLogin($input: LoginInput) {
-    userLogin(input: $input) {
+mutation UserLogin($input: LoginInput) {
+  userLogin(input: $input) {
+    user {
       email
+      _id
+      username
     }
+    token
   }
+}
 `;
