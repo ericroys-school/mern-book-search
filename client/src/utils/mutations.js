@@ -12,19 +12,18 @@ mutation UserCreate($input: UserCreateInput) {
 `;
 
 export const ADD_BOOK = gql`
-  mutation UserSaveBook($email: String!, $input: SaveBookInput) {
-    userSaveBook(email: $email, input: $input) {
-      email
-      savedBooks {
-        bookId
-        title
-        authors
-        description
-        image
-        link
-      }
+mutation UserSaveBook($input: SaveBookInput) {
+  userSaveBook(input: $input) {
+    savedBooks {
+      bookId
+      authors
+      title
+      link
+      description
+      image
     }
   }
+}
 `;
 export const REMOVE_BOOK = gql`
   mutation UserDeleteBook($email: String!, $bookId: String!) {

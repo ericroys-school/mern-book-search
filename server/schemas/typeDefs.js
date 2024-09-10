@@ -48,7 +48,7 @@ input SaveBookInput {
 
 type Mutation {
     userCreate(input: UserCreateInput): AuthResponse
-    userSaveBook(email:String!, input: SaveBookInput): User
+    userSaveBook(input: SaveBookInput): User
     userDeleteBook(email:String!, bookId: String!): User
     userLogin(input: LoginInput): AuthResponse
 }

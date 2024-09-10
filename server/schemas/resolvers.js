@@ -17,20 +17,20 @@ const resolvers = {
      *  used instead of the username (i.e. in the ui, input definition, etc)
      */
     userCreate: async (_, { input }) => {
-      console.log(input);
+      // console.log(input);
       let { email, password } = input;
       let user = await User.create({ username: email, email, password });
       let token = signToken(user);
       return { user, token };
     },
     /**add a book to the user saved books array */
-    userSaveBook: async (_, { email, input }, context) => {
+    userSaveBook: async (_, { input }, context) => {
       let { bookId, title, description, image, link, authors } = input;
-      console.log(input);
+
       if (context.user) {
         return await User.findOneAndUpdate(
           {
-            email: email,
+            email: context.user.email,
           },
           {
             //this adds duplicate unless _id:false is added to the model definition
