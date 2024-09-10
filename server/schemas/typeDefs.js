@@ -5,6 +5,12 @@ type User {
     email: String!
     password: String!
     savedBooks: [Book]
+    _id:ID!
+}
+
+type AuthResponse {
+    token: String!
+    user: User!
 }
 
 type Book {
@@ -17,7 +23,7 @@ type Book {
 }
 
 type Query {
-    user(email: String!): User
+    user(email: String!, username: String!, password: String!, _id:ID!): User
 }
 
 input UserCreateInput {
@@ -41,7 +47,7 @@ input SaveBookInput {
 }
 
 type Mutation {
-    userCreate(input: UserCreateInput): User
+    userCreate(input: UserCreateInput): AuthResponse
     userSaveBook(email:String!, input: SaveBookInput): User
     userDeleteBook(email:String!, bookId: String!): User
     userLogin(input: LoginInput): User
