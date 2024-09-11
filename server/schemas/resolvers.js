@@ -3,8 +3,10 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    user: async (_, { email }) => {
-      return User.findOne({ username: email });
+    user: async (_, {}, context) => {
+      if(context.user)
+      return await User.findOne({ email: context.user.email });
+    throw "Unauthorized"
     },
   },
   /** the mutations use input for more precise input requirements
@@ -17,13 +19,15 @@ const resolvers = {
      *  used instead of the username (i.e. in the ui, input definition, etc)
      */
     userCreate: async (_, { input }) => {
-      // console.log(input);
       let { email, password } = input;
+      //deal with disparity of email vs username by making them the same
       let user = await User.create({ username: email, email, password });
       let token = signToken(user);
       return { user, token };
     },
-    /**add a book to the user saved books array */
+    /**add a book to the user saved books array 
+     * if the user is logged in
+    */
     userSaveBook: async (_, { input }, context) => {
       let { bookId, title, description, image, link, authors } = input;
 
@@ -46,12 +50,14 @@ const resolvers = {
       }
       throw 'Not authenticated';
     },
-    /**delete a saved book from the user saved books array */
-    userDeleteBook: async (_, { email, bookId }, context) => {
+    /**delete a saved book from the user saved books array 
+     * if the user is logged in
+    */
+    userDeleteBook: async (_, {bookId}, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
           {
-            email: email,
+            email: context.user.email,
           },
           {
             $pull: { savedBooks: { bookId: bookId } },
