@@ -66,7 +66,7 @@ const SignupForm = () => {
         </Alert>
 
         <Form.Group className='mb-3'>
-          <Form.Label htmlFor='username'>Username</Form.Label>
+          <Form.Label htmlFor='username'>Name</Form.Label>
           <Form.Control
             type='text'
             placeholder='Your username'
