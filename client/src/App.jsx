@@ -3,14 +3,13 @@ import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apol
 import { Outlet } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 import AuthService from './utils/auth'
-
 import Navbar from './components/Navbar';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
-
+//context to support jwt
 const authLink = setContext((request, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = AuthService.loggedIn() ? AuthService.getToken() : null;

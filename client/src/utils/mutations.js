@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * Create user an return minimal fields
+ */
 export const CREATE_USER = gql`
 mutation UserCreate($input: UserCreateInput) {
   userCreate(input: $input) {
@@ -11,6 +14,9 @@ mutation UserCreate($input: UserCreateInput) {
 }
 `;
 
+/**
+ * Add book to user's savedBooks
+ */
 export const ADD_BOOK = gql`
 mutation UserSaveBook($input: SaveBookInput) {
   userSaveBook(input: $input) {
@@ -25,6 +31,10 @@ mutation UserSaveBook($input: SaveBookInput) {
   }
 }
 `;
+
+/**
+ * Remove book from user's savedBooks
+ */
 export const REMOVE_BOOK = gql`
   mutation UserDeleteBook($bookId: String!) {
     userDeleteBook(bookId: $bookId) {
@@ -35,6 +45,9 @@ export const REMOVE_BOOK = gql`
   }
 `;
 
+/**
+ * Login a user, returning minimal fields
+ */
 export const LOGIN = gql`
 mutation UserLogin($input: LoginInput) {
   userLogin(input: $input) {

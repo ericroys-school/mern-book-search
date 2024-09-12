@@ -1,4 +1,6 @@
-/** define the types, queries, mutations and input types for mutations */
+/** define the types, queries, mutations and input types for mutations 
+ *  In general, using input for anything more than a single input param
+*/
 const typeDefs = `
 type User {
     username: String!
